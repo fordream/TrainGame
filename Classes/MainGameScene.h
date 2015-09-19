@@ -17,6 +17,8 @@ private:
     int man_count;
     cocos2d::Label * label;
     cocos2d::Vector<cocos2d::SpriteBatchNode *> men;
+    cocos2d::Vector<cocos2d::Node *> doors;
+    bool door_open;
 public:
     virtual bool init();
     static cocos2d::Scene *createScene();

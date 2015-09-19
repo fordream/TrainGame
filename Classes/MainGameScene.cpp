@@ -31,26 +31,64 @@ bool MainGameScene::init() {
     Vec2 origin = Director::getInstance()->getVisibleOrigin();
     man_count = 0;
     men = Vector<SpriteBatchNode*>();
+    door_open = false;
 
     auto wallback = Sprite::create("箱.png");
     auto wall = Node::create();
 //    wall->setContentSize(Size(576,160));
-    Vec2 wallVec[5] = {
-            Vec2(0,100),
+    Vec2 wallVec[6] = {
             Vec2(0,0),
-            Vec2(0, 0),
-            Vec2(0,0)
+            Vec2(-50/2,0),
+            Vec2(-50/2,-200/2),
+            Vec2(550/2,-200/2),
+            Vec2(550/2,0),
+            Vec2(500/2,0)
+    };
+    auto sukima = Node::create();
+    Vec2 sukimaVec[2] = {
+            Vec2(150/2,0),
+            Vec2(350/2, 0)
     };
     wall->setPhysicsBody(
-            PhysicsBody::createEdgeChain(wallVec, 5,
+            PhysicsBody::createEdgeChain(wallVec, 6,
                     PhysicsMaterial(0.1f, 1.0f, 0.0f)
             )
     );
-//    wall->setPosition(,0);
-    wall-> setPosition(origin.x + visibleSize.width/2, origin.y + visibleSize.height/2);
+    sukima->setPhysicsBody(
+            PhysicsBody::createEdgeChain(sukimaVec, 2,
+                    PhysicsMaterial(0.1f, 1.0f, 0.0f)
+            )
+    );
+
+    doors = Vector<Node *>();
+    Vec2 doorVec[2] = {
+            Vec2(0, 0),
+            Vec2(75/2, 0)
+    };
+    for (int i = 0; i < 4; i++) {
+        auto d = Node::create();
+        d->setPhysicsBody(
+                PhysicsBody::createEdgeChain(doorVec,2,
+                        PhysicsMaterial(0.1f, 1.0f, 0.0f)
+                )
+        );
+        doors.pushBack(d);
+    }
+    doors.at(0)->setPosition(100,205);
+    doors.at(1)->setPosition(135,205);
+    doors.at(2)->setPosition(275,205);
+    doors.at(3)->setPosition(310,205);
+
+    wall->setPosition(100, 200);
+    sukima->setPosition(100,200);
     wallback-> setPosition(origin.x + visibleSize.width/2, origin.y + visibleSize.height/2);
     addChild(wall);
     addChild(wallback);
+    addChild(sukima);
+    addChild(doors.at(0));
+    addChild(doors.at(1));
+    addChild(doors.at(2));
+    addChild(doors.at(3));
 
     auto material = PHYSICSBODY_MATERIAL_DEFAULT;
     material.restitution = 0.0f;
@@ -78,24 +116,38 @@ bool MainGameScene::init() {
 }
 
 bool MainGameScene::onTouchBegan(Touch *touch, Event *unused_event) {
-    Point p = touch->getLocation();
-//    if(ballExists(p)) {
+//    Point p = touch->getLocation();
+////    if(ballExists(p)) {
+////
+////    } else {
+//        auto man = Sprite::create("man_sarary.png");
+//        man->setContentSize(Size(50, 50));
+//        man->setPosition(p.x, p.y);
+//        man->setTag(man_count);
+//        man->setScale(0.5f);
 //
-//    } else {
-        auto man = Sprite::create("man_sarary.png");
-        man->setContentSize(Size(50, 50));
-        man->setPosition(p.x, p.y);
-        man->setTag(man_count);
-        man->setScale(0.5f);
+////        men.pushBack(man);
+////
+//        auto pMan = PhysicsBody::createCircle(10.0f);
+//        pMan->setDynamic(true);
+//        pMan->setRotationEnable(true);
+//        man->setPhysicsBody(pMan);
+//        this->addChild(man);
+////    }
+    if(!door_open) {
+        doors.at(0)->runAction(MoveTo::create(1.0f, Point(65,205)));
+        doors.at(1)->runAction(MoveTo::create(1.0f, Point(170,205)));
+        doors.at(2)->runAction(MoveTo::create(1.0f, Point(240,205)));
+        doors.at(3)->runAction(MoveTo::create(1.0f, Point(345,205)));
+        door_open = true;
+    } else {
+        doors.at(0)->runAction(MoveTo::create(1.0f, Point(100,205)));
+        doors.at(1)->runAction(MoveTo::create(1.0f, Point(135,205)));
+        doors.at(2)->runAction(MoveTo::create(1.0f, Point(275,205)));
+        doors.at(3)->runAction(MoveTo::create(1.0f, Point(310,205)));
+        door_open = false;
+    }
 
-//        men.pushBack(man);
-//
-        auto pMan = PhysicsBody::createCircle(10.0f);
-        pMan->setDynamic(true);
-        pMan->setRotationEnable(true);
-        man->setPhysicsBody(pMan);
-        this->addChild(man);
-//    }
 
     return true;
 }
