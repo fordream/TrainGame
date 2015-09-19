@@ -26,13 +26,20 @@ bool MainGameScene::init() {
     if (!Layer::init()) {
         return false;
     }
-    Size visibleSize = Director::getInstance()->getVisibleSize();
-    Size winSize = Director::getInstance()->getWinSize();
-    Vec2 origin = Director::getInstance()->getVisibleOrigin();
+    visibleSize = Director::getInstance()->getVisibleSize();
+    winSize = Director::getInstance()->getWinSize();
+    origin = Director::getInstance()->getVisibleOrigin();
     man_count = 0;
     men = Vector<Sprite *>();
     door_open = false;
     walls = Vector<Node *>();
+
+    this->runAction(Sequence::create(DelayTime::create(3),CallFunc::create([this](){
+        auto label = Label::createWithTTF("Hello World", "fonts/Marker Felt.ttf", 24);
+        label->setPosition(Vec2(origin.x + visibleSize.width/2,
+                origin.y + visibleSize.height - label->getContentSize().height));
+        this->addChild(label, 1);
+    }), NULL));
 
     Sprite *background = Sprite::create("ホームと線路セット.png");
     background->setContentSize(Size(visibleSize.width, visibleSize.height));

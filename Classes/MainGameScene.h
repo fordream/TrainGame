@@ -21,7 +21,9 @@ private:
     bool door_open;
     cocos2d::Sprite *touchedMan;
     cocos2d::Vector<cocos2d::Node *>walls;
-
+    cocos2d::Size visibleSize;
+    cocos2d::Size winSize;
+    cocos2d::Vec2 origin;
 public:
     virtual bool init();
     static cocos2d::Scene *createScene();
@@ -40,6 +42,8 @@ public:
     bool collisionWithWalls();
 
     bool onContactBegin(cocos2d::PhysicsContact &contact);
+
+
 };
 
 #endif /* defined(__TrainGame__MainGameScene__) */
