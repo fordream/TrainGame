@@ -46,7 +46,7 @@ bool HelloWorld::init()
                             origin.y + visibleSize.height - label->getContentSize().height));
     this->addChild(label, 1);
 
-    sprite = Sprite::create("HelloWorld.png");
+    sprite = Sprite::create("man_sarary.png");
     sprite->setPosition(Vec2(visibleSize.width/2 + origin.x, visibleSize.height/2 + origin.y));
     this->addChild(sprite, 0);
 

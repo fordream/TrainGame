@@ -14,9 +14,9 @@
 class MainGameScene : public cocos2d::Layer
 {
 private:
-    int ball_count;
+    int man_count;
     cocos2d::Label * label;
-    cocos2d::Vector<cocos2d::Sprite *> balls;
+    cocos2d::Vector<cocos2d::SpriteBatchNode *> men;
 public:
     virtual bool init();
     static cocos2d::Scene *createScene();

@@ -29,13 +29,14 @@ bool MainGameScene::init() {
     Size visibleSize = Director::getInstance()->getVisibleSize();
     Size winSize = Director::getInstance()->getWinSize();
     Vec2 origin = Director::getInstance()->getVisibleOrigin();
-    ball_count = 0;
-    balls = Vector<Sprite*>();
+    man_count = 0;
+    men = Vector<SpriteBatchNode*>();
 
-    auto wall = Node::create();
+    auto wall = Sprite::create("箱.png");
+    wall->setScale(1.5f);
     wall->setPhysicsBody(
             PhysicsBody::createEdgeBox(
-                    Size(visibleSize.width, visibleSize.height),
+                    Size(wall->getContentSize().width, wall->getContentSize().height),
                     PhysicsMaterial(0.1f, 1.0f, 0.0f)
             )
     );
@@ -45,6 +46,18 @@ bool MainGameScene::init() {
     auto material = PHYSICSBODY_MATERIAL_DEFAULT;
     material.restitution = 0.0f;
     material.friction = 0.0f;
+
+//    auto man = Sprite::create("man_sarary.png");
+//    man->setContentSize(Size(100, 100));
+//    man->setPosition(origin.x + visibleSize.width/2, origin.y + visibleSize.height/2);
+//    man->setTag(man_count);
+//    men.pushBack(man);
+//
+//        auto pMan = PhysicsBody::createCircle(10.0f);
+//        pMan->setDynamic(true);
+//        pMan->setRotationEnable(true);
+//        man->setPhysicsBody(pMan);
+//    this->addChild(man);
 
     auto listener = EventListenerTouchOneByOne::create();
     listener->onTouchBegan = CC_CALLBACK_2(MainGameScene::onTouchBegan, this);
@@ -57,33 +70,35 @@ bool MainGameScene::init() {
 
 bool MainGameScene::onTouchBegan(Touch *touch, Event *unused_event) {
     Point p = touch->getLocation();
-    if(ballExists(p)) {
+//    if(ballExists(p)) {
+//
+//    } else {
+        auto man = Sprite::create("man_sarary.png");
+        man->setContentSize(Size(50, 50));
+        man->setPosition(p.x, p.y);
+        man->setTag(man_count);
+        man->setScale(0.5f);
 
-    } else {
-        auto ball = Sprite::create();
-        ball->setPosition(p.x, p.y);
-        ball->setColor(Color3B(255, 255, 0));
-        ball->setTag(ball_count);
-        balls.pushBack(ball);
-
-        auto pBall = PhysicsBody::createCircle(10.0f);
-        pBall->setDynamic(true);
-        pBall->setRotationEnable(true);
-        ball->setPhysicsBody(pBall);
-        addChild(ball);
-    }
+//        men.pushBack(man);
+//
+        auto pMan = PhysicsBody::createCircle(10.0f);
+        pMan->setDynamic(true);
+        pMan->setRotationEnable(true);
+        man->setPhysicsBody(pMan);
+        this->addChild(man);
+//    }
 
     return true;
 }
 
 void MainGameScene::onTouchMoved(Touch *touch, Event *unused_event) {
-    Point p = touch->getLocation();
-    if (ballExists(p)) {
-        auto ball = getBall(p);
-        auto pball = ball->getPhysicsBody();
-        pball->setEnable(false);
-        ball->setPosition(p.x, p.y);
-    }
+//    Point p = touch->getLocation();
+//    if (ballExists(p)) {
+//        auto ball = getBall(p);
+//        auto pball = ball->getPhysicsBody();
+//        pball->setEnable(false);
+//        ball->setPosition(p.x, p.y);
+//    }
 }
 
 void MainGameScene::onTouchEnded(Touch *touch, Event *unused_event) {
@@ -91,16 +106,16 @@ void MainGameScene::onTouchEnded(Touch *touch, Event *unused_event) {
 
 
 bool MainGameScene::ballExists(Point p) {
-    return getBall(p) != nullptr;
+//    return getBall(p) != nullptr;
 }
 
-Sprite *MainGameScene::getBall(Point p) {
-    Sprite *target = nullptr;
-    for(Sprite *ball : balls) {
-        Rect ballBox = ball->getBoundingBox();
-        if(ballBox.containsPoint(p)) {
-            target = ball;
-        }
-    }
-    return target;
-}
+//Sprite *MainGameScene::getBall(Point p) {
+//    Sprite *target = nullptr;
+//    for(Sprite *ball : balls) {
+//        Rect ballBox = ball->getBoundingBox();
+//        if(ballBox.containsPoint(p)) {
+//            target = ball;
+//        }
+//    }
+//    return target;
+//}
