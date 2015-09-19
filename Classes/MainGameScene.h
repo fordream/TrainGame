@@ -20,6 +20,7 @@ private:
     cocos2d::Vector<cocos2d::Node *> doors;
     bool door_open;
     cocos2d::Sprite *touchedMan;
+    cocos2d::Vector<cocos2d::Node *>walls;
 
 public:
     virtual bool init();
@@ -35,6 +36,10 @@ public:
     cocos2d::Sprite *getMan(cocos2d::Point p);
 
     bool manExists(cocos2d::Point p);
+
+    bool collisionWithWalls();
+
+    bool onContactBegin(cocos2d::PhysicsContact &contact);
 };
 
 #endif /* defined(__TrainGame__MainGameScene__) */

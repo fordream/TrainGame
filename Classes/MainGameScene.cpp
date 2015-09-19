@@ -32,40 +32,81 @@ bool MainGameScene::init() {
     man_count = 0;
     men = Vector<Sprite *>();
     door_open = false;
+    walls = Vector<Node *>();
+
+    Sprite *background = Sprite::create("ホームと線路セット.png");
+    background->setContentSize(Size(visibleSize.width, visibleSize.height));
+    background->setPosition(origin.x + visibleSize.width/2, origin.y + visibleSize.height/2);
+    addChild(background, 0);
 
     auto man = SpriteBatchNode::create("man_sarary.png");
-    addChild(man);
-    for (int i= 0; i < 10; i++) {
+    for (int i= 0; i < 2; i++) {
         auto manT = Sprite::createWithTexture(man->getTexture());
-        manT->setPosition(150+i*2, 100+i*2);
+        manT->setScale(0.5f, 0.5f);
+        manT->setPosition(150+i*2, 125);
         auto pMan = PhysicsBody::createCircle(10.0f);
         pMan->setDynamic(true);
         pMan->setRotationEnable(true);
         manT->setPhysicsBody(pMan);
-        this->addChild(manT);
+        this->addChild(manT, 100);
         men.pushBack(manT);
     }
-    auto wallback = Sprite::create("箱.png");
-    auto wall = Node::create();
-//    wall->setContentSize(Size(576,160));
-    Vec2 wallVec[6] = {
+
+    auto wall0 = Node::create();
+    auto wall1 = Node::create();
+    auto wall2 = Node::create();
+    auto wall3 = Node::create();
+    auto wall4 = Node::create();
+    Vec2 wallVec0[2] = {
             Vec2(0,0),
+            Vec2(-50/2, 0)
+    };
+    Vec2 wallVec1[2] = {
             Vec2(-50/2,0),
+            Vec2(-50/2,-200/2)
+    };
+    Vec2 wallVec2[2] = {
             Vec2(-50/2,-200/2),
             Vec2(550/2,-200/2),
+    };
+    Vec2 wallVec3[2] = {
+            Vec2(550/2,-200/2),
+            Vec2(550/2,0),
+    };
+    Vec2 wallVec4[2] = {
             Vec2(550/2,0),
             Vec2(500/2,0)
     };
+    wall0->setPhysicsBody(
+            PhysicsBody::createEdgeChain(wallVec0, 2,
+                    PhysicsMaterial(0.1f, 1.0f, 0.0f)
+            )
+    );
+    wall1->setPhysicsBody(
+            PhysicsBody::createEdgeChain(wallVec1, 2,
+                    PhysicsMaterial(0.1f, 1.0f, 0.0f)
+            )
+    );
+    wall2->setPhysicsBody(
+            PhysicsBody::createEdgeChain(wallVec2, 2,
+                    PhysicsMaterial(0.1f, 1.0f, 0.0f)
+            )
+    );
+    wall3->setPhysicsBody(
+            PhysicsBody::createEdgeChain(wallVec3, 2,
+                    PhysicsMaterial(0.1f, 1.0f, 0.0f)
+            )
+    );
+    wall4->setPhysicsBody(
+            PhysicsBody::createEdgeChain(wallVec4, 2,
+                    PhysicsMaterial(0.1f, 1.0f, 0.0f)
+            )
+    );
     auto sukima = Node::create();
     Vec2 sukimaVec[2] = {
             Vec2(150/2,0),
             Vec2(350/2, 0)
     };
-    wall->setPhysicsBody(
-            PhysicsBody::createEdgeChain(wallVec, 6,
-                    PhysicsMaterial(0.1f, 1.0f, 0.0f)
-            )
-    );
     sukima->setPhysicsBody(
             PhysicsBody::createEdgeChain(sukimaVec, 2,
                     PhysicsMaterial(0.1f, 1.0f, 0.0f)
@@ -85,17 +126,42 @@ bool MainGameScene::init() {
                 )
         );
         doors.pushBack(d);
+        walls.pushBack(d);
+
     }
+    walls.pushBack(wall0);
+    walls.pushBack(wall1);
+    walls.pushBack(wall2);
+    walls.pushBack(wall3);
+    walls.pushBack(wall4);
+    walls.pushBack(sukima);
+
     doors.at(0)->setPosition(100,205);
     doors.at(1)->setPosition(135,205);
     doors.at(2)->setPosition(275,205);
     doors.at(3)->setPosition(310,205);
 
-    wall->setPosition(100, 200);
+    wall0->setPosition(100, 200);
+    wall1->setPosition(100, 200);
+    wall2->setPosition(100, 200);
+    wall3->setPosition(100, 200);
+    wall4->setPosition(100, 200);
+
     sukima->setPosition(100,200);
-    wallback-> setPosition(origin.x + visibleSize.width/2, origin.y + visibleSize.height/2);
-    addChild(wall);
-    addChild(wallback);
+
+    auto wallback = Sprite::create("箱-2.png");
+    wallback->setAnchorPoint(Vec2(0,0));
+    wallback-> setPosition(50,100);
+
+
+
+    addChild(wall0);
+    addChild(wall1);
+    addChild(wall2);
+    addChild(wall3);
+    addChild(wall4);
+
+    addChild(wallback,10);
     addChild(sukima);
     addChild(doors.at(0));
     addChild(doors.at(1));
@@ -131,11 +197,11 @@ bool MainGameScene::onTouchBegan(Touch *touch, Event *unused_event) {
 
     // door
     if(!door_open) {
-        doors.at(0)->runAction(MoveTo::create(1.0f, Point(65,205)));
-        doors.at(1)->runAction(MoveTo::create(1.0f, Point(170,205)));
-        doors.at(2)->runAction(MoveTo::create(1.0f, Point(240,205)));
-        doors.at(3)->runAction(MoveTo::create(1.0f, Point(345,205)));
-        door_open = true;
+//        doors.at(0)->runAction(MoveTo::create(1.0f, Point(65,205)));
+//        doors.at(1)->runAction(MoveTo::create(1.0f, Point(170,205)));
+//        doors.at(2)->runAction(MoveTo::create(1.0f, Point(240,205)));
+//        doors.at(3)->runAction(MoveTo::create(1.0f, Point(345,205)));
+//        door_open = true;
     } else {
         doors.at(0)->runAction(MoveTo::create(1.0f, Point(100,205)));
         doors.at(1)->runAction(MoveTo::create(1.0f, Point(135,205)));
@@ -145,6 +211,9 @@ bool MainGameScene::onTouchBegan(Touch *touch, Event *unused_event) {
     }
     if(manExists(p)) {
         touchedMan = getMan(p);
+        if (collisionWithWalls()) {
+
+        }
     }
 //        auto man = Sprite::create("man_sarary.png");
 //        man->setContentSize(Size(50, 50));
@@ -162,17 +231,24 @@ bool MainGameScene::onTouchBegan(Touch *touch, Event *unused_event) {
 ////    }
 
 
-
-
     return true;
 }
 
 void MainGameScene::onTouchMoved(Touch *touch, Event *unused_event) {
     Point p = touch->getLocation();
     if(touchedMan != nullptr) {
-        touchedMan->setPosition(Vec2(p.x, p.y));
+        // 衝突したらTouchedManをnullにする
+        if(collisionWithWalls()) {
+            touchedMan = nullptr;
 
+        } else {
+            touchedMan->setPosition(p);
+        }
     }
+}
+
+bool MainGameScene::onContactBegin(PhysicsContact& contact) {
+    touchedMan = nullptr;
 }
 
 void MainGameScene::onTouchEnded(Touch *touch, Event *unused_event) {
@@ -192,4 +268,15 @@ Sprite *MainGameScene::getMan(Point p) {
         }
     }
     return target;
+}
+
+bool MainGameScene::collisionWithWalls() {
+//    for(Node *wall : walls) {
+//        Rect wallBox = wall->getBoundingBox();
+//        Rect manBox = touchedMan->getBoundingBox();
+//        if(wallBox.intersectsRect(manBox)) {
+//            return true;
+//        }
+//    }
+    return false;
 }
