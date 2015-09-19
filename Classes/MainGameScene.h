@@ -16,9 +16,11 @@ class MainGameScene : public cocos2d::Layer
 private:
     int man_count;
     cocos2d::Label * label;
-    cocos2d::Vector<cocos2d::SpriteBatchNode *> men;
+    cocos2d::Vector<cocos2d::Sprite *> men;
     cocos2d::Vector<cocos2d::Node *> doors;
     bool door_open;
+    cocos2d::Sprite *touchedMan;
+
 public:
     virtual bool init();
     static cocos2d::Scene *createScene();
@@ -30,9 +32,9 @@ public:
 
     void onTouchEnded(cocos2d::Touch *touch, cocos2d::Event *unused_event);
 
-    cocos2d::Sprite *getBall(cocos2d::Point p);
+    cocos2d::Sprite *getMan(cocos2d::Point p);
 
-    bool ballExists(cocos2d::Point p);
+    bool manExists(cocos2d::Point p);
 };
 
 #endif /* defined(__TrainGame__MainGameScene__) */

@@ -13,7 +13,7 @@ using namespace cocos2d;
 Scene* MainGameScene::createScene() {
 	auto scene = Scene::createWithPhysics();
     PhysicsWorld* world = scene->getPhysicsWorld();
-    world->setGravity(Vec2(0, -500));
+    world->setGravity(Vec2(0, 0));
     world->setSpeed(1.0f);
     world->setDebugDrawMask(PhysicsWorld::DEBUGDRAW_ALL);
 	auto layer = MainGameScene::create();
@@ -30,9 +30,21 @@ bool MainGameScene::init() {
     Size winSize = Director::getInstance()->getWinSize();
     Vec2 origin = Director::getInstance()->getVisibleOrigin();
     man_count = 0;
-    men = Vector<SpriteBatchNode*>();
+    men = Vector<Sprite *>();
     door_open = false;
 
+    auto man = SpriteBatchNode::create("man_sarary.png");
+    addChild(man);
+    for (int i= 0; i < 10; i++) {
+        auto manT = Sprite::createWithTexture(man->getTexture());
+        manT->setPosition(150+i*2, 100+i*2);
+        auto pMan = PhysicsBody::createCircle(10.0f);
+        pMan->setDynamic(true);
+        pMan->setRotationEnable(true);
+        manT->setPhysicsBody(pMan);
+        this->addChild(manT);
+        men.pushBack(manT);
+    }
     auto wallback = Sprite::create("箱.png");
     auto wall = Node::create();
 //    wall->setContentSize(Size(576,160));
@@ -100,10 +112,7 @@ bool MainGameScene::init() {
 //    man->setTag(man_count);
 //    men.pushBack(man);
 //
-//        auto pMan = PhysicsBody::createCircle(10.0f);
-//        pMan->setDynamic(true);
-//        pMan->setRotationEnable(true);
-//        man->setPhysicsBody(pMan);
+
 //    this->addChild(man);
 
     auto listener = EventListenerTouchOneByOne::create();
@@ -116,10 +125,27 @@ bool MainGameScene::init() {
 }
 
 bool MainGameScene::onTouchBegan(Touch *touch, Event *unused_event) {
-//    Point p = touch->getLocation();
-////    if(ballExists(p)) {
-////
-////    } else {
+
+    touchedMan = nullptr;
+    Point p = touch->getLocation();
+
+    // door
+    if(!door_open) {
+        doors.at(0)->runAction(MoveTo::create(1.0f, Point(65,205)));
+        doors.at(1)->runAction(MoveTo::create(1.0f, Point(170,205)));
+        doors.at(2)->runAction(MoveTo::create(1.0f, Point(240,205)));
+        doors.at(3)->runAction(MoveTo::create(1.0f, Point(345,205)));
+        door_open = true;
+    } else {
+        doors.at(0)->runAction(MoveTo::create(1.0f, Point(100,205)));
+        doors.at(1)->runAction(MoveTo::create(1.0f, Point(135,205)));
+        doors.at(2)->runAction(MoveTo::create(1.0f, Point(275,205)));
+        doors.at(3)->runAction(MoveTo::create(1.0f, Point(310,205)));
+        door_open = false;
+    }
+    if(manExists(p)) {
+        touchedMan = getMan(p);
+    }
 //        auto man = Sprite::create("man_sarary.png");
 //        man->setContentSize(Size(50, 50));
 //        man->setPosition(p.x, p.y);
@@ -134,49 +160,36 @@ bool MainGameScene::onTouchBegan(Touch *touch, Event *unused_event) {
 //        man->setPhysicsBody(pMan);
 //        this->addChild(man);
 ////    }
-    if(!door_open) {
-        doors.at(0)->runAction(MoveTo::create(1.0f, Point(65,205)));
-        doors.at(1)->runAction(MoveTo::create(1.0f, Point(170,205)));
-        doors.at(2)->runAction(MoveTo::create(1.0f, Point(240,205)));
-        doors.at(3)->runAction(MoveTo::create(1.0f, Point(345,205)));
-        door_open = true;
-    } else {
-        doors.at(0)->runAction(MoveTo::create(1.0f, Point(100,205)));
-        doors.at(1)->runAction(MoveTo::create(1.0f, Point(135,205)));
-        doors.at(2)->runAction(MoveTo::create(1.0f, Point(275,205)));
-        doors.at(3)->runAction(MoveTo::create(1.0f, Point(310,205)));
-        door_open = false;
-    }
+
+
 
 
     return true;
 }
 
 void MainGameScene::onTouchMoved(Touch *touch, Event *unused_event) {
-//    Point p = touch->getLocation();
-//    if (ballExists(p)) {
-//        auto ball = getBall(p);
-//        auto pball = ball->getPhysicsBody();
-//        pball->setEnable(false);
-//        ball->setPosition(p.x, p.y);
-//    }
+    Point p = touch->getLocation();
+    if(touchedMan != nullptr) {
+        touchedMan->setPosition(Vec2(p.x, p.y));
+
+    }
 }
 
 void MainGameScene::onTouchEnded(Touch *touch, Event *unused_event) {
 }
 
 
-bool MainGameScene::ballExists(Point p) {
-//    return getBall(p) != nullptr;
+bool MainGameScene::manExists(Point p) {
+    return getMan(p) != nullptr;
 }
 
-//Sprite *MainGameScene::getBall(Point p) {
-//    Sprite *target = nullptr;
-//    for(Sprite *ball : balls) {
-//        Rect ballBox = ball->getBoundingBox();
-//        if(ballBox.containsPoint(p)) {
-//            target = ball;
-//        }
-//    }
-//    return target;
-//}
+Sprite *MainGameScene::getMan(Point p) {
+    Sprite *target = nullptr;
+    for(Sprite *man : men) {
+        Rect manBox = man->getBoundingBox();
+        if(manBox.containsPoint(p)) {
+            target = man;
+        }
+    }
+    return target;
+}
