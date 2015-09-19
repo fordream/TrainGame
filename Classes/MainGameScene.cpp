@@ -34,13 +34,6 @@ bool MainGameScene::init() {
     door_open = false;
     walls = Vector<Node *>();
 
-    this->runAction(Sequence::create(DelayTime::create(3),CallFunc::create([this](){
-        auto label = Label::createWithTTF("Hello World", "fonts/Marker Felt.ttf", 24);
-        label->setPosition(Vec2(origin.x + visibleSize.width/2,
-                origin.y + visibleSize.height - label->getContentSize().height));
-        this->addChild(label, 1);
-    }), NULL));
-
     Sprite *background = Sprite::create("ホームと線路セット.png");
     background->setContentSize(Size(visibleSize.width, visibleSize.height));
     background->setPosition(origin.x + visibleSize.width/2, origin.y + visibleSize.height/2);
@@ -193,6 +186,61 @@ bool MainGameScene::init() {
     listener->onTouchMoved = CC_CALLBACK_2(MainGameScene::onTouchMoved, this);
     listener->onTouchEnded = CC_CALLBACK_2(MainGameScene::onTouchEnded, this);
     this->getEventDispatcher()->addEventListenerWithSceneGraphPriority(listener, this);
+
+    this->runAction(Sequence::create(DelayTime::create(1),CallFunc::create([this](){
+        //CCSpriteクラスを初期化
+        CCSprite*sprite_five = CCSprite::create("5.png");
+        //位置を設定
+        sprite_five->setPosition(ccp(450,270));
+        //画面に追加
+        this->addChild(sprite_five);
+    }), NULL));
+
+    this->runAction(Sequence::create(DelayTime::create(1),CallFunc::create([this](){
+        CCSprite*sprite_rail = CCSprite::create("レール.png");
+        sprite_rail->setPosition(ccp(450,180));
+        this->addChild(sprite_rail);
+    }), NULL));
+
+    this->runAction(Sequence::create(DelayTime::create(1),CallFunc::create([this](){
+        CCSprite*sprite1 = CCSprite::create("時間の電車.png");
+        sprite1->setPosition(ccp(450,600));
+        this->addChild(sprite1);
+    }), NULL));
+
+    this->runAction(Sequence::create(DelayTime::create(2),CallFunc::create([this](){
+        CCSprite*sprite2 = CCSprite::create("時間の電車.png");
+        sprite2->setPosition(ccp(450,100));
+        this->addChild(sprite2);
+    }), NULL));
+
+    this->runAction(Sequence::create(DelayTime::create(3),CallFunc::create([this](){
+        CCSprite*sprite3 = CCSprite::create("時間の電車.png");
+        sprite3->setPosition(ccp(450,140));
+        this->addChild(sprite3);
+    }), NULL));
+
+    this->runAction(Sequence::create(DelayTime::create(4),CallFunc::create([this](){
+        CCSprite*sprite4 = CCSprite::create("時間の電車.png");
+        sprite4->setPosition(ccp(450,180));
+        this->addChild(sprite4);
+    }), NULL));
+
+    this->runAction(Sequence::create(DelayTime::create(5),CallFunc::create([this](){
+        CCSprite*sprite5 = CCSprite::create("時間の電車.png");
+        sprite5->setPosition(ccp(450,220));
+        this->addChild(sprite5);
+    }), NULL));
+
+    //this->runAction(Sequence::create(DelayTime::create(6),CallFunc::create([this](){
+       /* sprite_five->setVisible(false);
+        sprite_rail->setVisible(false);
+        sprite1->setVisible(false);
+        sprite2->setVisible(false);
+        sprite3->setVisible(false);
+        sprite4->setVisible(false);
+        sprite5->setVisible(false);*/
+    //}), NULL));
 
     return true;
 }

@@ -24,6 +24,7 @@ private:
     cocos2d::Size visibleSize;
     cocos2d::Size winSize;
     cocos2d::Vec2 origin;
+
 public:
     virtual bool init();
     static cocos2d::Scene *createScene();
@@ -43,6 +44,13 @@ public:
 
     bool onContactBegin(cocos2d::PhysicsContact &contact);
 
+    cocos2d::Sprite *sprite_five;
+    cocos2d::Sprite *sprite_rail;
+    cocos2d::Sprite *sprite1;
+    cocos2d::Sprite *sprite2;
+    cocos2d::Sprite *sprite3;
+    cocos2d::Sprite *sprite4;
+    cocos2d::Sprite *sprite5;
 
 };
 
