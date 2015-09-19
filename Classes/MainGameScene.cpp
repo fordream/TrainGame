@@ -7,6 +7,7 @@
 //
 
 #include "MainGameScene.h"
+#include "man.h"
 
 using namespace cocos2d;
 
@@ -33,30 +34,22 @@ bool MainGameScene::init() {
     men = Vector<Sprite *>();
     door_open = false;
     walls = Vector<Node *>();
+    score = 0;
+//    passenger = Vector<man* >();
 
-    this->runAction(Sequence::create(DelayTime::create(3),CallFunc::create([this](){
-        auto label = Label::createWithTTF("Hello World", "fonts/Marker Felt.ttf", 24);
-        label->setPosition(Vec2(origin.x + visibleSize.width/2,
-                origin.y + visibleSize.height - label->getContentSize().height));
-        this->addChild(label, 1);
-    }), NULL));
 
     Sprite *background = Sprite::create("ホームと線路セット.png");
     background->setContentSize(Size(visibleSize.width, visibleSize.height));
     background->setPosition(origin.x + visibleSize.width/2, origin.y + visibleSize.height/2);
     addChild(background, 0);
 
-    auto man = SpriteBatchNode::create("man_sarary.png");
-    for (int i= 0; i < 2; i++) {
-        auto manT = Sprite::createWithTexture(man->getTexture());
-        manT->setScale(0.5f, 0.5f);
-        manT->setPosition(150+i*2, 125);
-        auto pMan = PhysicsBody::createCircle(10.0f);
-        pMan->setDynamic(true);
-        pMan->setRotationEnable(true);
-        manT->setPhysicsBody(pMan);
-        this->addChild(manT, 100);
-        men.pushBack(manT);
+    sman = SpriteBatchNode::create("man_sarary.png");
+    auto kid = SpriteBatchNode::create("子供.png");
+    for (int i= 0; i < 10; i++) {
+        man newMan = man(sman, kid, i, men);
+        this->addChild(newMan.pas, 100);
+        men.pushBack(newMan.pas);
+        manOut[i] = newMan.out;
     }
 
     auto wall0 = Node::create();
@@ -136,6 +129,23 @@ bool MainGameScene::init() {
         walls.pushBack(d);
 
     }
+
+
+    doorimg0 = Sprite::create("ドア-4.png");
+    doorimg1 = Sprite::create("ドア-4.png");
+    doorimg2 = Sprite::create("ドア-4.png");
+    doorimg3 = Sprite::create("ドア-4.png");
+
+    doorimg0->setAnchorPoint(Vec2(0,0));
+    doorimg1->setAnchorPoint(Vec2(0,0));
+    doorimg2->setAnchorPoint(Vec2(0,0));
+    doorimg3->setAnchorPoint(Vec2(0,0));
+
+    doorimg0->setPosition(100,205);
+    doorimg1->setPosition(135,205);
+    doorimg2->setPosition(275,205);
+    doorimg3->setPosition(310,205);
+
     walls.pushBack(wall0);
     walls.pushBack(wall1);
     walls.pushBack(wall2);
@@ -158,7 +168,7 @@ bool MainGameScene::init() {
 
     auto wallback = Sprite::create("箱-2.png");
     wallback->setAnchorPoint(Vec2(0,0));
-    wallback-> setPosition(50,100);
+    wallback-> setPosition(80, 100);
 
 
 
@@ -174,6 +184,11 @@ bool MainGameScene::init() {
     addChild(doors.at(1));
     addChild(doors.at(2));
     addChild(doors.at(3));
+    addChild(doorimg0);
+    addChild(doorimg1);
+    addChild(doorimg2);
+    addChild(doorimg3);
+
 
     auto material = PHYSICSBODY_MATERIAL_DEFAULT;
     material.restitution = 0.0f;
@@ -194,6 +209,101 @@ bool MainGameScene::init() {
     listener->onTouchEnded = CC_CALLBACK_2(MainGameScene::onTouchEnded, this);
     this->getEventDispatcher()->addEventListenerWithSceneGraphPriority(listener, this);
 
+
+    this->runAction(Sequence::create(DelayTime::create(1),CallFunc::create([this](){
+        doors.at(0)->runAction(MoveTo::create(1.0f, Point(65,205)));
+        doors.at(1)->runAction(MoveTo::create(1.0f, Point(170,205)));
+        doors.at(2)->runAction(MoveTo::create(1.0f, Point(240,205)));
+        doors.at(3)->runAction(MoveTo::create(1.0f, Point(345,205)));
+        doorimg0->runAction(MoveTo::create(1.0f, Point(65,205)));
+        doorimg1->runAction(MoveTo::create(1.0f, Point(170,205)));
+        doorimg2->runAction(MoveTo::create(1.0f, Point(240,205)));
+        doorimg3->runAction(MoveTo::create(1.0f, Point(345,205)));
+
+        door_open = true;
+    }), NULL));
+
+
+    this->runAction(Sequence::create(DelayTime::create(8),CallFunc::create([this](){
+        doors.at(0)->runAction(MoveTo::create(1.0f, Point(100,205)));
+        doors.at(1)->runAction(MoveTo::create(1.0f, Point(135,205)));
+        doors.at(2)->runAction(MoveTo::create(1.0f, Point(275,205)));
+        doors.at(3)->runAction(MoveTo::create(1.0f, Point(310,205)));
+        doorimg0->runAction(MoveTo::create(1.0f, Point(100,205)));
+        doorimg1->runAction(MoveTo::create(1.0f, Point(135,205)));
+        doorimg2->runAction(MoveTo::create(1.0f, Point(275,205)));
+        doorimg3->runAction(MoveTo::create(1.0f, Point(310,205)));
+        door_open = false;
+
+        //score
+        for (int i = 0; i < men.size(); ++i) {
+            if(manOut[i] == 0 ) {
+                //kid
+                if(inGoodPosition0(men.at(i))) {
+                    // 大人は外
+                    score += 100;
+                } else {
+                    score -= 7;
+                }
+            } else {
+                //man
+                if(inGoodPosition1(men.at(i))) {
+                    //子供は中
+                    score += 100;
+                } else {
+                    score -= 10;
+                }
+
+            }
+        }
+        auto label = Label::createWithTTF("", "fonts/Marker Felt.ttf", 24);
+
+        label->setColor(ccc3(255, 0, 127));
+        auto str = StringUtils::format("SCORE: %d", score);
+        label->setPosition(Vec2(origin.x + visibleSize.width/2,
+                origin.y + visibleSize.height/2));
+        this->addChild(label, 1000);
+        label->setString(str);
+
+    }), NULL));
+
+    bool flg = true;
+//    if(flg){
+//        //3秒後に移動してくる
+//    for (int i = 10; i < 18; ++i) {
+//        Vector<Sprite *> afterman;
+//        auto manT = Sprite::createWithTexture(sman->getTexture());
+//        manT->setScale(0.5f, 0.5f);
+//        manT->setPosition(100, 200);
+//        auto pMan = PhysicsBody::createCircle(10.0f);
+//        pMan->setDynamic(true);
+//        pMan->setRotationEnable(true);
+//        manT->setPhysicsBody(pMan);
+//        manOut[i+10] = 0;
+//        afterman.pushBack(manT);
+//        men.push
+//        this->addChild(manT);
+//        manT->runAction(move);
+//    }
+//    this->runAction(Sequence::create(DelayTime::create(3),CallFunc::create([this](){
+//            MoveTo* move = MoveTo::create(2.0f, Point(0, -50));
+//            // after man
+//
+//            for(Sprite *aman: afterman) {
+//
+//            }
+//            // アクションの実行
+//
+//        }), NULL));
+
+
+        //当たり判定をとって止める
+        // if(当たり判定){
+        //     flg = false;
+        // }
+
+//    }
+
     return true;
 }
 
@@ -204,11 +314,7 @@ bool MainGameScene::onTouchBegan(Touch *touch, Event *unused_event) {
 
     // door
     if(!door_open) {
-//        doors.at(0)->runAction(MoveTo::create(1.0f, Point(65,205)));
-//        doors.at(1)->runAction(MoveTo::create(1.0f, Point(170,205)));
-//        doors.at(2)->runAction(MoveTo::create(1.0f, Point(240,205)));
-//        doors.at(3)->runAction(MoveTo::create(1.0f, Point(345,205)));
-//        door_open = true;
+
     } else {
         doors.at(0)->runAction(MoveTo::create(1.0f, Point(100,205)));
         doors.at(1)->runAction(MoveTo::create(1.0f, Point(135,205)));
@@ -286,4 +392,32 @@ bool MainGameScene::collisionWithWalls() {
 //        }
 //    }
     return false;
+}
+
+bool MainGameScene::inGoodPosition0(cocos2d::Sprite *pSprite) {
+    // 大人は外
+    auto p = pSprite->getPosition();
+    if(inTheTrain(p)) {
+        return false;
+    } else {
+        return true;
+    }
+}
+
+bool MainGameScene::inGoodPosition1(cocos2d::Sprite *pSprite) {
+    // 子供は中
+    auto p = pSprite->getPosition();
+    if(inTheTrain(p)) {
+        return true;
+    } else {
+        return false;
+    }
+}
+
+bool MainGameScene::inTheTrain(const cocos2d::Vec2 vec2) {
+    if (vec2.x >-25 && vec2.x <325 && vec2.y>100 && vec2.x <200) {
+        return true;
+    } else {
+        return false;
+    }
 }

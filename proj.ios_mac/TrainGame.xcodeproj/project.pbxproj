@@ -56,7 +56,10 @@
 		521A8EAA19F11F5000D177D7 /* fonts in Resources */ = {isa = PBXBuildFile; fileRef = 521A8EA819F11F5000D177D7 /* fonts */; };
 		52B47A471A53D09C004E4C60 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 52B47A461A53D09B004E4C60 /* Security.framework */; };
 		8262943E1AAF051F00CB7CF7 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8262943D1AAF051F00CB7CF7 /* Security.framework */; };
+		B674A06DE51E61B23BC32A81 /* man.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B674AA2A61F2045217C50CBD /* man.cpp */; };
+		B674A15D4CE6AF718FBF85FE /* 子供.png in Resources */ = {isa = PBXBuildFile; fileRef = B674A759476F79E799EE068A /* 子供.png */; };
 		B674A375B5B105C9F5DFE7B9 /* ドア.png in Resources */ = {isa = PBXBuildFile; fileRef = B674A3DDE90BA87CE22391BF /* ドア.png */; };
+		B674A3AE5C4858EA77C961E5 /* ドア-4.png in Resources */ = {isa = PBXBuildFile; fileRef = B674AD09C4D3236FF5C7CBF8 /* ドア-4.png */; };
 		B674A3B3EF05F1A8FA105B3E /* エリア.png in Resources */ = {isa = PBXBuildFile; fileRef = B674A2D1C84C14D90B11D2B9 /* エリア.png */; };
 		B674A3D506132FF7A773367A /* MainGameScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B674AFD25F6E3A60206F9691 /* MainGameScene.cpp */; };
 		B674A444D50359C0A1EA8802 /* 箱.png in Resources */ = {isa = PBXBuildFile; fileRef = B674A77C73E2A059748A3CD2 /* 箱.png */; };
@@ -64,7 +67,9 @@
 		B674A7F7788C2E063481EECD /* HelloWorldScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B674AD9A24DA9ECDCE1DE9C7 /* HelloWorldScene.cpp */; };
 		B674A8DEEA9C4AC17CD3504D /* ソファ.png in Resources */ = {isa = PBXBuildFile; fileRef = B674A1E04FF21E31282DB8FD /* ソファ.png */; };
 		B674AA08FFF42068FCD70D8F /* 箱-2.png in Resources */ = {isa = PBXBuildFile; fileRef = B674A2A85D27E9B745BAFEB5 /* 箱-2.png */; };
+		B674AA1DD3AA97E5A60D1812 /* 分別_発車.png in Resources */ = {isa = PBXBuildFile; fileRef = B674A5E3428BBE467A73FC00 /* 分別_発車.png */; };
 		B674AB0F62245983C5AA2C09 /* AppDelegate.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B674A709EF2D0519134D4137 /* AppDelegate.cpp */; };
+		B674AC4427B817A2C2CBEB2B /* 分別_背景.png in Resources */ = {isa = PBXBuildFile; fileRef = B674A742672C40CBFAA27378 /* 分別_背景.png */; };
 		B674AE44A5577CC5D1D86679 /* man_sarary.png in Resources */ = {isa = PBXBuildFile; fileRef = B674A83F7B8E3A3A3CA635EA /* man_sarary.png */; };
 		B674AE7D0E95AF9945FB3A4E /* ドア-2.png in Resources */ = {isa = PBXBuildFile; fileRef = B674ABA7FEEE830EE3EA094A /* ドア-2.png */; };
 		BF171245129291EC00B8313A /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BF170DB012928DE900B8313A /* OpenGLES.framework */; };
@@ -162,13 +167,19 @@
 		B674A2D1C84C14D90B11D2B9 /* エリア.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "エリア.png"; sourceTree = "<group>"; };
 		B674A36E11393A406C1DD774 /* MainGameScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MainGameScene.h; sourceTree = "<group>"; };
 		B674A3DDE90BA87CE22391BF /* ドア.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ドア.png"; sourceTree = "<group>"; };
+		B674A5E3428BBE467A73FC00 /* 分別_発車.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "分別_発車.png"; sourceTree = "<group>"; };
 		B674A5EFE016EC0D6949A9E7 /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		B674A709EF2D0519134D4137 /* AppDelegate.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = AppDelegate.cpp; sourceTree = "<group>"; };
+		B674A742672C40CBFAA27378 /* 分別_背景.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "分別_背景.png"; sourceTree = "<group>"; };
+		B674A759476F79E799EE068A /* 子供.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "子供.png"; sourceTree = "<group>"; };
 		B674A77C73E2A059748A3CD2 /* 箱.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "箱.png"; sourceTree = "<group>"; };
 		B674A83F7B8E3A3A3CA635EA /* man_sarary.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = man_sarary.png; sourceTree = "<group>"; };
 		B674A8788416DD6FF61149C8 /* ホームと線路セット.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ホームと線路セット.png"; sourceTree = "<group>"; };
+		B674AA2A61F2045217C50CBD /* man.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = man.cpp; sourceTree = "<group>"; };
 		B674ABA7FEEE830EE3EA094A /* ドア-2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ドア-2.png"; sourceTree = "<group>"; };
+		B674AD09C4D3236FF5C7CBF8 /* ドア-4.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ドア-4.png"; sourceTree = "<group>"; };
 		B674AD9A24DA9ECDCE1DE9C7 /* HelloWorldScene.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = HelloWorldScene.cpp; sourceTree = "<group>"; };
+		B674AED80919898002B4971C /* man.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = man.h; sourceTree = "<group>"; };
 		B674AFB589445C0712127207 /* HelloWorldScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HelloWorldScene.h; sourceTree = "<group>"; };
 		B674AFD25F6E3A60206F9691 /* MainGameScene.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MainGameScene.cpp; sourceTree = "<group>"; };
 		BF170DB012928DE900B8313A /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = System/Library/Frameworks/OpenGLES.framework; sourceTree = SDKROOT; };
@@ -314,6 +325,10 @@
 				B674A77C73E2A059748A3CD2 /* 箱.png */,
 				B674A8788416DD6FF61149C8 /* ホームと線路セット.png */,
 				B674A2A85D27E9B745BAFEB5 /* 箱-2.png */,
+				B674A759476F79E799EE068A /* 子供.png */,
+				B674AD09C4D3236FF5C7CBF8 /* ドア-4.png */,
+				B674A5E3428BBE467A73FC00 /* 分別_発車.png */,
+				B674A742672C40CBFAA27378 /* 分別_背景.png */,
 			);
 			name = Resources;
 			path = ../Resources;
@@ -328,6 +343,8 @@
 				B674AFB589445C0712127207 /* HelloWorldScene.h */,
 				B674AFD25F6E3A60206F9691 /* MainGameScene.cpp */,
 				B674A36E11393A406C1DD774 /* MainGameScene.h */,
+				B674AA2A61F2045217C50CBD /* man.cpp */,
+				B674AED80919898002B4971C /* man.h */,
 			);
 			name = Classes;
 			path = ../Classes;
@@ -511,6 +528,10 @@
 				B674A444D50359C0A1EA8802 /* 箱.png in Resources */,
 				B674A631B836965187C77BAB /* ホームと線路セット.png in Resources */,
 				B674AA08FFF42068FCD70D8F /* 箱-2.png in Resources */,
+				B674A15D4CE6AF718FBF85FE /* 子供.png in Resources */,
+				B674A3AE5C4858EA77C961E5 /* ドア-4.png in Resources */,
+				B674AA1DD3AA97E5A60D1812 /* 分別_発車.png in Resources */,
+				B674AC4427B817A2C2CBEB2B /* 分別_背景.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -540,6 +561,7 @@
 				B674AB0F62245983C5AA2C09 /* AppDelegate.cpp in Sources */,
 				B674A7F7788C2E063481EECD /* HelloWorldScene.cpp in Sources */,
 				B674A3D506132FF7A773367A /* MainGameScene.cpp in Sources */,
+				B674A06DE51E61B23BC32A81 /* man.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

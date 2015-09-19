@@ -10,6 +10,7 @@
 #define __TrainGame__MainGameScene__
 
 #include "cocos2d.h"
+#include "man.h"
 
 class MainGameScene : public cocos2d::Layer
 {
@@ -24,6 +25,14 @@ private:
     cocos2d::Size visibleSize;
     cocos2d::Size winSize;
     cocos2d::Vec2 origin;
+    int manOut[100];
+    int score;
+    cocos2d::Sprite * doorimg0;
+    cocos2d::Sprite * doorimg1;
+    cocos2d::Sprite * doorimg2;
+    cocos2d::Sprite * doorimg3;
+    cocos2d::SpriteBatchNode * sman;
+
 public:
     virtual bool init();
     static cocos2d::Scene *createScene();
@@ -44,6 +53,11 @@ public:
     bool onContactBegin(cocos2d::PhysicsContact &contact);
 
 
+    bool inGoodPosition0(cocos2d::Sprite *pSprite);
+
+    bool inGoodPosition1(cocos2d::Sprite *pSprite);
+
+    bool inTheTrain(const cocos2d::Vec2 vec2);
 };
 
 #endif /* defined(__TrainGame__MainGameScene__) */
