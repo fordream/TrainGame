@@ -32,16 +32,25 @@ bool MainGameScene::init() {
     man_count = 0;
     men = Vector<SpriteBatchNode*>();
 
-    auto wall = Sprite::create("箱.png");
-    wall->setScale(1.5f);
+    auto wallback = Sprite::create("箱.png");
+    auto wall = Node::create();
+//    wall->setContentSize(Size(576,160));
+    Vec2 wallVec[5] = {
+            Vec2(0,100),
+            Vec2(0,0),
+            Vec2(0, 0),
+            Vec2(0,0)
+    };
     wall->setPhysicsBody(
-            PhysicsBody::createEdgeBox(
-                    Size(wall->getContentSize().width, wall->getContentSize().height),
+            PhysicsBody::createEdgeChain(wallVec, 5,
                     PhysicsMaterial(0.1f, 1.0f, 0.0f)
             )
     );
+//    wall->setPosition(,0);
     wall-> setPosition(origin.x + visibleSize.width/2, origin.y + visibleSize.height/2);
+    wallback-> setPosition(origin.x + visibleSize.width/2, origin.y + visibleSize.height/2);
     addChild(wall);
+    addChild(wallback);
 
     auto material = PHYSICSBODY_MATERIAL_DEFAULT;
     material.restitution = 0.0f;
