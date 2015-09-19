@@ -13,7 +13,7 @@ man::man(SpriteBatchNode * sman, SpriteBatchNode * kid, int i, cocos2d::Vector<c
         auto manT = Sprite::createWithTexture(sman->getTexture());
         manT->setScale(0.5f, 0.5f);
         manT->setPosition(150 + i * 2, 125);
-        auto pMan = PhysicsBody::createCircle(10.0f);
+        auto pMan = PhysicsBody::createCircle(15.0f);
         pMan->setDynamic(true);
         pMan->setRotationEnable(true);
         manT->setPhysicsBody(pMan);

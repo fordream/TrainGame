@@ -16,7 +16,7 @@ Scene* MainGameScene::createScene() {
     PhysicsWorld* world = scene->getPhysicsWorld();
     world->setGravity(Vec2(0, 0));
     world->setSpeed(1.0f);
-    world->setDebugDrawMask(PhysicsWorld::DEBUGDRAW_ALL);
+//    world->setDebugDrawMask(PhysicsWorld::DEBUGDRAW_ALL);
 	auto layer = MainGameScene::create();
 	scene->addChild(layer);
 	
@@ -45,7 +45,7 @@ bool MainGameScene::init() {
 
     sman = SpriteBatchNode::create("man_sarary.png");
     auto kid = SpriteBatchNode::create("子供.png");
-    for (int i= 0; i < 10; i++) {
+    for (int i= 0; i < 20; i++) {
         man newMan = man(sman, kid, i, men);
         this->addChild(newMan.pas, 100);
         men.pushBack(newMan.pas);
@@ -166,7 +166,7 @@ bool MainGameScene::init() {
 
     sukima->setPosition(100,200);
 
-    auto wallback = Sprite::create("箱-2.png");
+    auto wallback = Sprite::create("箱-3.png");
     wallback->setAnchorPoint(Vec2(0,0));
     wallback-> setPosition(80, 100);
 
@@ -303,6 +303,50 @@ bool MainGameScene::init() {
         // }
 
 //    }
+    this->runAction(Sequence::create(DelayTime::create(1),CallFunc::create([this](){
+        //CCSpriteクラスを初期化
+        CCSprite*sprite_five = CCSprite::create("5.png");
+        //位置を設定
+        sprite_five->setPosition(ccp(450,270));
+        //画面に追加
+        this->addChild(sprite_five);
+    }), NULL));
+
+    this->runAction(Sequence::create(DelayTime::create(1),CallFunc::create([this](){
+        Sprite* sprite_rail = Sprite::create("レール.png");
+        sprite_rail->setPosition(ccp(450,180));
+        this->addChild(sprite_rail);
+    }), NULL));
+
+    this->runAction(Sequence::create(DelayTime::create(3),CallFunc::create([this](){
+        Sprite* sprite1 = Sprite::create("時間の電車.png");
+        sprite1->setPosition(ccp(450,600));
+        this->addChild(sprite1);
+    }), NULL));
+
+    this->runAction(Sequence::create(DelayTime::create(4),CallFunc::create([this](){
+        Sprite* sprite2 = Sprite::create("時間の電車.png");
+        sprite2->setPosition(ccp(450,100));
+        this->addChild(sprite2);
+    }), NULL));
+
+    this->runAction(Sequence::create(DelayTime::create(5),CallFunc::create([this](){
+        Sprite* sprite3 = Sprite::create("時間の電車.png");
+        sprite3->setPosition(ccp(450,140));
+        this->addChild(sprite3);
+    }), NULL));
+
+    this->runAction(Sequence::create(DelayTime::create(6),CallFunc::create([this](){
+        Sprite* sprite4 = Sprite::create("時間の電車.png");
+        sprite4->setPosition(ccp(450,180));
+        this->addChild(sprite4);
+    }), NULL));
+
+    this->runAction(Sequence::create(DelayTime::create(7),CallFunc::create([this](){
+        Sprite* sprite5 = Sprite::create("時間の電車.png");
+        sprite5->setPosition(ccp(450,220));
+        this->addChild(sprite5);
+    }), NULL));
 
     return true;
 }
@@ -313,15 +357,15 @@ bool MainGameScene::onTouchBegan(Touch *touch, Event *unused_event) {
     Point p = touch->getLocation();
 
     // door
-    if(!door_open) {
-
-    } else {
-        doors.at(0)->runAction(MoveTo::create(1.0f, Point(100,205)));
-        doors.at(1)->runAction(MoveTo::create(1.0f, Point(135,205)));
-        doors.at(2)->runAction(MoveTo::create(1.0f, Point(275,205)));
-        doors.at(3)->runAction(MoveTo::create(1.0f, Point(310,205)));
-        door_open = false;
-    }
+//    if(!door_open) {
+//
+//    } else {
+//        doors.at(0)->runAction(MoveTo::create(1.0f, Point(100,205)));
+//        doors.at(1)->runAction(MoveTo::create(1.0f, Point(135,205)));
+//        doors.at(2)->runAction(MoveTo::create(1.0f, Point(275,205)));
+//        doors.at(3)->runAction(MoveTo::create(1.0f, Point(310,205)));
+//        door_open = false;
+//    }
     if(manExists(p)) {
         touchedMan = getMan(p);
         if (collisionWithWalls()) {

@@ -32,6 +32,13 @@ private:
     cocos2d::Sprite * doorimg2;
     cocos2d::Sprite * doorimg3;
     cocos2d::SpriteBatchNode * sman;
+    cocos2d::Sprite *sprite_five;
+    cocos2d::Sprite *sprite_rail;
+    cocos2d::Sprite *sprite1;
+    cocos2d::Sprite *sprite2;
+    cocos2d::Sprite *sprite3;
+    cocos2d::Sprite *sprite4;
+    cocos2d::Sprite *sprite5;
 
 public:
     virtual bool init();
